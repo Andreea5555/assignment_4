@@ -29,6 +29,7 @@ public class Deposit
     logger.print("Producer_Consumer.Miner deposits valuables or waits if the deposit is full");
   }
   public Valuable takeValuable() throws InterruptedException{
+    logger.print("The transporter takes the valuables into the list or waits if there is not enough");
    return jewels.take();
   }
 }
