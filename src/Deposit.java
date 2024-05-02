@@ -9,6 +9,7 @@ public class Deposit
     private static Deposit instance;
     private int capacity;
     private ArrayBlockingQueue<Valuable> jewels;
+    private Log logger;
 
   private Deposit( int capacity)
   {
@@ -24,6 +25,7 @@ public class Deposit
   public void depositValuable(Valuable valuable) throws InterruptedException
   {
     jewels.put(valuable);
+    logger.print("Producer_Consumer.Miner deposits valuables or waits if the deposit is full");
   }
   public Valuable takeValuable() throws InterruptedException{
    return jewels.take();

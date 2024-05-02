@@ -1,3 +1,5 @@
+package Producer_Consumer;
+
 import Domain.Valuable;
 
 import static java.lang.Thread.sleep;
@@ -26,7 +28,7 @@ public class Miner implements Runnable
         sleep(1000);
 
         Valuable valuable = mine.mine();
-        logger.print("Miner has mined "+valuable.getValuableType());
+        logger.print("Producer_Consumer.Miner has mined "+valuable.getValuableType());
 
         deposit.depositValuable(valuable);
       }

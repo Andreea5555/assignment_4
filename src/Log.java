@@ -11,7 +11,6 @@ public class Log
     if (instance == null)
     {
       instance = new Log();
-      System.out.println("BLAH");
     }
     return instance;
   }
