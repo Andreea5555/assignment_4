@@ -21,7 +21,8 @@ public class TreasureRoom
     valuables.add(valuable);
   }
   public Valuable retrieve(int index){
-     return valuables.get(index);
+    valuables.remove(index);
+    return valuables.get(index);
   }
   public int look(){
     return valuables.size();
