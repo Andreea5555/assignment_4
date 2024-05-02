@@ -1,5 +1,9 @@
 import Producer_Consumer.Miner;
 import Producer_Consumer.Valuable_Transporter;
+import Proxy.Door;
+import Proxy.TreasureRoom;
+import Proxy.TreasureRoomGuardsman;
+import Proxy.Treasury;
 import main.Deposit;
 
 public class Start
@@ -8,7 +12,10 @@ public class Start
   {
     Deposit deposit= Deposit.getInstance();
     Miner miner=new Miner();
-    Valuable_Transporter transporter=new Valuable_Transporter();
+    TreasureRoom treasureRoom=new TreasureRoom();
+    TreasureRoomGuardsman guard=new TreasureRoomGuardsman(treasureRoom);
+    Door door= new Door(guard);
+    Valuable_Transporter transporter=new Valuable_Transporter(door);
 
     Thread thread1=new Thread(miner);
     Thread thread2=new Thread(transporter);

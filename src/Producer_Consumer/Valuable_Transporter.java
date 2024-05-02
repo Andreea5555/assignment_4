@@ -1,6 +1,7 @@
 package Producer_Consumer;
 
 import Domain.Valuable;
+import Proxy.Door;
 import Writer_Reader.Writer;
 import main.Deposit;
 import main.Log;
@@ -17,12 +18,14 @@ public class Valuable_Transporter implements Runnable, Writer
   private Deposit deposit;
   private ArrayList<Valuable> valuables;
   private int capacity;
+  private Door door;
 
-  public Valuable_Transporter()
+  public Valuable_Transporter(Door door)
   {
     valuables=new ArrayList<>();
     deposit=Deposit.getInstance();
     log=Log.getInstance();
+    this.door=door;
   }
 
   @Override public void run()
@@ -38,7 +41,11 @@ public class Valuable_Transporter implements Runnable, Writer
             valuables.add(deposit.takeValuable());
           }
           //here we should add the writer part
-          valuables.remove(i);
+          while(!valuables.isEmpty()){
+            var treasureRoom = door.requestWrite();
+            treasureRoom.add(valuables.get(i), this);
+            valuables.remove(i);
+          }
           sleep(1000);
         }
       }

@@ -7,30 +7,23 @@ import main.Log;
 
 import java.util.ArrayList;
 
-public class TreasureRoom implements Treasury
+public class TreasureRoom
 {
+  private Valuable_Transporter transporter;
   private ArrayList<Valuable> valuables;
-  private Valuable_Transporter valuableTransporter;
-  private Log logger;
 
-  public TreasureRoom() {
-    logger=Log.getInstance();
+  public TreasureRoom()
+  {
+
     this.valuables = new ArrayList<>();
-    this.valuableTransporter=new Valuable_Transporter();
   }
-
-  @Override public void add(Valuable valuable,Writer writer)
-  {
-    this.valuables.add(valuable);
+  public void add(Valuable valuable){
+    valuables.add(valuable);
   }
-
-  @Override public Valuable retrieve(int index)
-  {
-    return this.valuables.get(index);
+  public Valuable retrieve(int index){
+     return valuables.get(index);
   }
-
-  @Override public int look()
-  {
- return valuables.size();
+  public int look(){
+    return valuables.size();
   }
 }

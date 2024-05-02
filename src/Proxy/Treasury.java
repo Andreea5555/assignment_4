@@ -7,7 +7,7 @@ import Writer_Reader.Writer;
 
 public interface Treasury
 {
-  void add(Valuable valuable, Writer writer);
-  Valuable retrieve(int index, Reader reader);
-  int look(Reader reader);
+  void add(Valuable valuable,Object object);
+  Valuable retrieve(int index, Object object);
+  int look(Object object);
 }

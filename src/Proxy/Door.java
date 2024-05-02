@@ -1,9 +1,11 @@
-package Writer_Reader;
+package Proxy;
 
 import Domain.Valuable;
 import Proxy.Treasury;
+import Writer_Reader.AccessManager;
 
-public class Door implements AccessManager{
+public class Door implements AccessManager
+{
     private int readers;
     private int writers;
     private Treasury treasure;
