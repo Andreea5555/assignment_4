@@ -12,14 +12,14 @@ public class Deposit
     private ArrayBlockingQueue<Valuable> jewels;
     private Log logger;
 
-  private Deposit( int capacity)
-  { this.logger=Log.getInstance();
-    this.capacity = capacity;
+  private Deposit()
+  { capacity=70;
+    this.logger=Log.getInstance();
     this.jewels=new ArrayBlockingQueue<>(capacity);
   }
-  public synchronized static Deposit getInstance(int capacity){
+  public synchronized static Deposit getInstance(){
     if(instance==null){
-      instance=new Deposit(capacity);
+      instance=new Deposit();
     }
     return instance;
   }

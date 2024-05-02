@@ -11,10 +11,10 @@ public class Miner implements Runnable
   private Deposit deposit;
   private Log logger;
 
-  public Miner(int capacity)
+  public Miner()
   {
     this.mine= Mine.getInstance();
-    this.deposit = Deposit.getInstance(capacity);
+    this.deposit = Deposit.getInstance();
     this.logger = Log.getInstance();
   }
 
