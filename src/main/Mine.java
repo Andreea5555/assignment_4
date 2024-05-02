@@ -1,5 +1,6 @@
-import Domain.*;
+package main;
 
+import Domain.*;
 import java.util.ArrayList;
 import java.util.Random;
 

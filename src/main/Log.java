@@ -1,3 +1,5 @@
+package main;
+
 public class Log
 {
   private static Log instance;

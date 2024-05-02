@@ -1,6 +1,7 @@
+package main;
+
 import Domain.Valuable;
 
-import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class Deposit
