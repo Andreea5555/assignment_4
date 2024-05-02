@@ -34,14 +34,17 @@ public class Valuable_Transporter implements Runnable, Writer
     int number= random.nextInt(50);
       try
       {
+        System.out.println(number);
         for(int i=0;i<number;i++)
         {
           for (int j = 0; j <= number; j++)
           {
             valuables.add(deposit.takeValuable());
           }
-          //here we should add the writer part
+          //here we add the writer part
+          System.out.println(valuables);
           while(!valuables.isEmpty()){
+
             var treasureRoom = door.requestWrite();
             treasureRoom.add(valuables.get(i), this);
             valuables.remove(i);

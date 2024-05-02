@@ -17,7 +17,7 @@ public class Door implements AccessManager
     }
 
     @Override
-    public void releaseRead() {
+    public synchronized void releaseRead() {
         readers--;
         if (readers == 0) {
             notifyAll();
@@ -25,7 +25,7 @@ public class Door implements AccessManager
     }
 
     @Override
-    public Treasury requestWrite() throws InterruptedException {
+    public synchronized Treasury requestWrite() throws InterruptedException {
         while (readers > 0 || writers > 0) {
             wait();
         }
@@ -34,7 +34,7 @@ public class Door implements AccessManager
     }
 
     @Override
-    public void releaseWrite() {
+    public synchronized void releaseWrite() {
         writers--;
         if (writers == 0){
             notifyAll();

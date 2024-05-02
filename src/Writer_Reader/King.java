@@ -3,6 +3,8 @@ package Writer_Reader;
 import Domain.Valuable;
 import Proxy.Door;
 
+import static java.lang.Thread.sleep;
+
 public class King implements Runnable, Reader, Writer {
     private Door door;
 
@@ -11,7 +13,7 @@ public class King implements Runnable, Reader, Writer {
     }
 
     @Override
-    public void run() {
+    public synchronized void run() {
         //Make the king read the treasure room until it's empty and hold a party if he has 100 jewels
         while (true) {
             try {
@@ -22,12 +24,14 @@ public class King implements Runnable, Reader, Writer {
                     for (int i = 0; i < 100; i++) {
                         treasure.retrieve(i, this);
                     }
-                    Thread.sleep(1000);
+                    sleep(1000);
+                }
+                else{
+                    wait();
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-}
 }
