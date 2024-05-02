@@ -13,7 +13,7 @@ public class Deposit
     private Log logger;
 
   private Deposit( int capacity)
-  {
+  { this.logger=Log.getInstance();
     this.capacity = capacity;
     this.jewels=new ArrayBlockingQueue<>(capacity);
   }
@@ -26,10 +26,10 @@ public class Deposit
   public void depositValuable(Valuable valuable) throws InterruptedException
   {
     jewels.put(valuable);
-    logger.print("Producer_Consumer.Miner deposits valuables or waits if the deposit is full");
+    logger.print("Producer_Consumer.Miner deposits");
   }
   public Valuable takeValuable() throws InterruptedException{
-    logger.print("The transporter takes the valuables into the list or waits if there is not enough");
+    logger.print("The transporter takes the valuables ");
    return jewels.take();
   }
 }

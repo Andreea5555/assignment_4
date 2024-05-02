@@ -15,10 +15,13 @@ public class Valuable_Transporter implements Runnable
   private Log log;
   private Deposit deposit;
   private ArrayList<Valuable> valuables;
+  private int capacity;
 
-  public Valuable_Transporter()
+  public Valuable_Transporter(int capacity)
   {
     valuables=new ArrayList<>();
+    deposit=Deposit.getInstance(capacity);
+    log=Log.getInstance();
   }
 
   @Override public void run()
