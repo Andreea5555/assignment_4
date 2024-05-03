@@ -1,30 +1,31 @@
 package Proxy;
 
 import Domain.Valuable;
-import Producer_Consumer.Valuable_Transporter;
-import Writer_Reader.Writer;
-import main.Log;
+
 
 import java.util.ArrayList;
 
-public class TreasureRoom
+public class TreasureRoom implements Treasury
 {
-  private Valuable_Transporter transporter;
   private ArrayList<Valuable> valuables;
 
   public TreasureRoom()
   {
-
     this.valuables = new ArrayList<>();
   }
-  public void add(Valuable valuable){
-    valuables.add(valuable);
+
+  @Override public void add(Valuable valuable, Object object)
+  {
+    this.valuables.add(valuable);
   }
-  public Valuable retrieve(int index){
-    valuables.remove(index);
-    return valuables.get(index);
+
+  @Override public Valuable retrieve(int index, Object object)
+  {
+    return valuables.remove(index);
   }
-  public int look(){
+
+  @Override public int look(Object object)
+  {
     return valuables.size();
   }
 }

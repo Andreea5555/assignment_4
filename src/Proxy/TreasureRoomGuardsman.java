@@ -15,20 +15,24 @@ public class TreasureRoomGuardsman implements Treasury
   private Log logger;
 
   public TreasureRoomGuardsman(TreasureRoom treasureRoom) {
-    logger=Log.getInstance();
+    logger = Log.getInstance();
     this.treasureRoom=treasureRoom;
   }
 
   @Override public void add(Valuable valuable,Object object)
   {
     if(object instanceof Writer)
-      treasureRoom.add(valuable);
+    {
+      treasureRoom.add(valuable, object);
+      logger.print(object + " added " + valuable.getValuableType());
+    }
   }
 
   @Override public Valuable retrieve(int index, Object object)
   {
-    if(object instanceof Reader){
-      return treasureRoom.retrieve(index);
+    if(object instanceof Reader) {
+      logger.print(object + " retreived a valuable");
+      return treasureRoom.retrieve(index, object);
     }
     return null;
   }
@@ -36,8 +40,10 @@ public class TreasureRoomGuardsman implements Treasury
   @Override public int look(Object object)
   {
     if(object instanceof Reader){
-      return treasureRoom.look();
+      logger.print(object + " looked in the stash");
+      return treasureRoom.look(object);
     }
-    return 0;
+
+    return -1;
   }
 }
