@@ -2,6 +2,8 @@ package Producer_Consumer;
 
 import Domain.Valuable;
 import Proxy.Door;
+import Proxy.TreasureRoomGuardsman;
+import Writer_Reader.AccessManager;
 import Writer_Reader.Writer;
 import main.Deposit;
 import main.Log;
@@ -18,14 +20,24 @@ public class Valuable_Transporter implements Runnable, Writer
   private Deposit deposit;
   private ArrayList<Valuable> valuables;
   private int capacity;
-  private Door door;
+//  private Writer writer;
+  private TreasureRoomGuardsman guardsman;
 
-  public Valuable_Transporter(Door door)
+//  public Valuable_Transporter(Door door)
+//  {
+//    valuables=new ArrayList<>();
+//    deposit=Deposit.getInstance();
+//    log=Log.getInstance();
+//    this.door=door;
+//  }
+
+  public Valuable_Transporter(TreasureRoomGuardsman guardsman)
   {
     valuables=new ArrayList<>();
     deposit=Deposit.getInstance();
     log=Log.getInstance();
-    this.door=door;
+//    this.writer=writer;
+    this.guardsman = guardsman;
   }
 
   @Override public void run()
@@ -44,9 +56,8 @@ public class Valuable_Transporter implements Runnable, Writer
           //here we add the writer part
           System.out.println(valuables);
           while(!valuables.isEmpty()){
-
-            var treasureRoom = door.requestWrite();
-            treasureRoom.add(valuables.get(i), this);
+//            Writer writer = accessManager.requestWrite();
+            guardsman.add(valuables.get(i), this);
             valuables.remove(i);
           }
           sleep(1000);
@@ -57,4 +68,19 @@ public class Valuable_Transporter implements Runnable, Writer
         throw new RuntimeException(e);
       }
     }
+
+  @Override public Valuable retrieve(int index, Object object)
+  {
+    return this.guardsman.retrieve(index, this);
   }
+
+  @Override public int look(Object object)
+  {
+    return this.guardsman.look(object);
+  }
+
+  @Override public void add(Valuable valuable, Object object)
+  {
+    this.guardsman.add(valuable, object);
+  }
+}

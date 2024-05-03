@@ -1,5 +1,8 @@
 package Writer_Reader;
 
-public interface Writer
+import Domain.Valuable;
+
+public interface Writer extends Reader
 {
+  void add(Valuable valuable,Object object);
 }

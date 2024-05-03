@@ -5,8 +5,12 @@ import Proxy.Treasury;
 
 public interface AccessManager
 {
+//  void releaseRead();
+//  Treasury requestWrite() throws InterruptedException;
+//  void releaseWrite();
+//  Treasury requestRead() throws InterruptedException;
   void releaseRead();
-  Treasury requestWrite() throws InterruptedException;
+  Reader requestRead() throws InterruptedException;
   void releaseWrite();
-  Treasury requestRead() throws InterruptedException;
+  Writer requestWrite() throws InterruptedException;
 }

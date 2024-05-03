@@ -34,4 +34,19 @@ public class King implements Runnable, Reader, Writer {
             }
         }
     }
+
+    @Override public Valuable retrieve(int index, Object object)
+    {
+        return null;
+    }
+
+    @Override public int look(Object object)
+    {
+        return 0;
+    }
+
+    @Override public void add(Valuable valuable, Object object)
+    {
+
+    }
 }

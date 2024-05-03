@@ -1,19 +1,45 @@
 package Proxy;
 
 import Domain.Valuable;
+import Producer_Consumer.Valuable_Transporter;
 import Proxy.Treasury;
-import Writer_Reader.AccessManager;
+import Writer_Reader.*;
 
 public class Door implements AccessManager
 {
     private int readers;
     private int writers;
-    private Treasury treasure;
+    private int current;
+    private int next;
+//    private Treasury treasure;
+    private Reader accountant;
+    private Valuable_Transporter transporter;
+    private Writer king;
 
-    public Door(Treasury treasure) {
+    //probably one more readerWriter(king)
+
+//    public Door(Treasury treasure) {
+//        readers = 0;
+//        writers = 0;
+//        this.treasure = treasure;
+//    }
+
+//    public Door(Valuable_Transporter writer, Accountant reader) {
+//        readers = 0;
+//        writers = 0;
+//        current = 0;
+//        next = 0;
+//        this.writer = writer;
+//        this.reader = reader;
+//    }
+    public Door(TreasureRoomGuardsman guardsman) {
         readers = 0;
         writers = 0;
-        this.treasure = treasure;
+        current = 0;
+        next = 0;
+        this.accountant = new Accountant(guardsman);
+        this.transporter = new Valuable_Transporter(guardsman);
+        this.king = new King(this);
     }
 
     @Override
@@ -25,12 +51,20 @@ public class Door implements AccessManager
     }
 
     @Override
-    public synchronized Treasury requestWrite() throws InterruptedException {
+    public synchronized Valuable_Transporter requestWrite() throws InterruptedException {
+        int myNumber = next;
+        next++;
+        while (myNumber != current) {
+            wait();
+        }
         while (readers > 0 || writers > 0) {
             wait();
         }
         writers++;
-        return treasure;
+        current++;
+        notifyAll();
+
+        return transporter;
     }
 
     @Override
@@ -42,11 +76,19 @@ public class Door implements AccessManager
     }
 
     @Override
-    public synchronized Treasury requestRead() throws InterruptedException {
+    public synchronized Reader requestRead() throws InterruptedException {
+        int myNumber = next;
+        next++;
+        while (myNumber != current) {
+            wait();
+        }
         while (writers > 0) {
             wait();
         }
         readers++;
-        return treasure;
+        current++;
+        notifyAll();
+
+        return accountant;
     }
 }
