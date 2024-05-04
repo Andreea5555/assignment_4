@@ -13,8 +13,4 @@ public class Mine
         ValuableMultiton.getInstance("Stone" + (ValuableMultiton.getSize() + 1))
             .getName());
   }
-
-  public String getAndRemoveStone(String name) {
-    return ValuableMultiton.getInstance(name).getName();
-  }
 }
