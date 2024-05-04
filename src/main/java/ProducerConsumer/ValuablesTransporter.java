@@ -72,4 +72,10 @@ public class ValuablesTransporter implements Runnable, Writer
     //not the transporter's role
     return null;
   }
+
+  @Override public int look()
+  {
+    //not the transporter's role
+    return 0;
+  }
 }

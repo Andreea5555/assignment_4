@@ -44,6 +44,6 @@ public class Start
     transporterThread2.start();
     accountantThread1.start();
     accountantThread2.start();
-//    kingThread.start();
+    kingThread.start();
   }
 }

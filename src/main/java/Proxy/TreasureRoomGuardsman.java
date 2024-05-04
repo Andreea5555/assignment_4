@@ -23,7 +23,7 @@ public class TreasureRoomGuardsman implements Treasury
 
   @Override public int look(Object actor)
   {
-    if (actor instanceof Accountant) {
+    if (actor instanceof Accountant || actor instanceof King) {
       return treasureRoom.look(actor);
     }
 

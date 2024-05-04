@@ -30,40 +30,39 @@ public class King implements Runnable, Writer
     return guardsman.retrieve(this);
   }
 
+  @Override public int look()
+  {
+    return guardsman.look(this);
+  }
+
   @Override public void run()
   {
     while (true) {
       Random random = new Random();
       int target = random.nextInt(151) + 50;
-      String message = "The king is taking " + target + " stones from the treasury to make a party";
       try
       {
         Writer writer = door.requestWrite(1);
-        for (int i = 0; i < target; i++)
-        {
-          ValuableStone stone;
-          try {
-            stone = writer.retrieve();
+        if (target < look()) {
+          Log.getInstance().log("The king is taking " + target + " stones from the treasury");
+          Thread.sleep(5000);
+          for (int i = 0; i < target; i++)
+          {
+            this.stones.add(writer.retrieve());
           }
-          catch (ArrayIndexOutOfBoundsException e) {
-            stone = null;
-          }
-          if (stone != null) {
-            this.stones.add(stone);
-          }
-          else {
-            for (int j = 0; j < i; j++)
-            {
-              writer.add(this.stones.get(j));
-            }
-            message = "There are not enough stones in the treasury for the king to make a party";
-            break;
-          }
+
+          Log.getInstance().log("The king is having his party");
+          this.stones.clear();
+          Thread.sleep(10000);
+
+          Log.getInstance().log("The king has finished his party");
+          Thread.sleep(10000);
         }
-        Thread.sleep(5000);
-        Log.getInstance().log(message);
+        else {
+          Log.getInstance().log("There are not enough stones for the king to party");
+          Thread.sleep(20000);
+        }
         door.releaseWrite();
-        stones.clear();
       }
       catch (InterruptedException e)
       {
