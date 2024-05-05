@@ -18,7 +18,7 @@ public class Miner implements Runnable
     this.logger = Log.getInstance();
   }
 
-  @Override public synchronized void run()
+  @Override public void run()
   {
     logger.print("The miner is going to work");
     while (!mine.isEmpty())

@@ -8,53 +8,48 @@ import main.Log;
 import main.Mine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import static java.lang.Thread.sleep;
 
-public class Valuable_Transporter implements Runnable, Writer
-{
-  private Log log;
-  private Deposit deposit;
-  private ArrayList<Valuable> valuables;
-  private int capacity;
-  private Door door;
+public class Valuable_Transporter implements Runnable, Writer {
+    private Log log;
+    private Deposit deposit;
+    private ArrayList<Valuable> valuables;
+    private Door door;
 
-  public Valuable_Transporter(Door door)
-  {
-    valuables=new ArrayList<>();
-    deposit=Deposit.getInstance();
-    log=Log.getInstance();
-    this.door=door;
-  }
-
-  @Override public void run()
-  {
-    Random random=new Random();
-    int number= random.nextInt(50);
-      try
-      {
-        System.out.println(number);
-        for(int i=0;i<number;i++)
-        {
-          for (int j = 0; j <= number; j++)
-          {
-            valuables.add(deposit.takeValuable());
-          }
-          //here we add the writer part
-          System.out.println(valuables);
-          while(!valuables.isEmpty()){
-
-            var treasureRoom = door.requestWrite();
-            treasureRoom.add(valuables.get(i), this);
-            valuables.remove(i);
-          }
-          sleep(1000);
-        }
-      }
-      catch (InterruptedException e)
-      {
-        throw new RuntimeException(e);
-      }
+    public Valuable_Transporter(Door door) {
+        valuables = new ArrayList<>();
+        deposit = Deposit.getInstance();
+        log = Log.getInstance();
+        this.door = door;
     }
-  }
+
+    @Override
+    public void run() {
+        Random random = new Random();
+        int number = random.nextInt(5) + 1;
+        System.out.println("Number of valuables to transport: " + number);
+        while (true) {
+            try {
+                if (valuables.isEmpty() && this.deposit.getSize() >= number) {
+                    System.out.println("Taking valuables from deposit of size" + this.deposit.getSize());
+                    Valuable[] valFromDeposit = this.deposit.takeValuables(number);
+                    System.out.println("Valuables taken from deposit: " + Arrays.toString(valFromDeposit));
+                    valuables.addAll(Arrays.asList(valFromDeposit));
+                    System.out.println("TAKEN valuables from deposit of size" + this.deposit.getSize());
+                }
+                while (!valuables.isEmpty()) {
+                    System.out.println("Transporting valuables to treasure room");
+                    var val = valuables.remove(0);
+                    door.requestWrite().add(val, this);
+                    door.releaseWrite();
+                }
+                sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+}

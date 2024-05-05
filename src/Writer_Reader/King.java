@@ -13,21 +13,19 @@ public class King implements Runnable, Reader, Writer {
     }
 
     @Override
-    public synchronized void run() {
+    public void run() {
         //Make the king read the treasure room until it's empty and hold a party if he has 100 jewels
         while (true) {
             try {
                 var treasure = door.requestWrite();
                 var jewels = treasure.look(this);
-                if (jewels == 100) {
+                if (jewels >= 10) {
                     System.out.println("The king is holding a party");
-                    for (int i = 0; i < 100; i++) {
+                    for (int i = 0; i < 10; i++) {
                         treasure.retrieve(i, this);
                     }
+                    door.releaseWrite();
                     sleep(1000);
-                }
-                else{
-                    wait();
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
