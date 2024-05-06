@@ -17,15 +17,17 @@ public class King implements Runnable, Reader, Writer {
         //Make the king read the treasure room until it's empty and hold a party if he has 100 jewels
         while (true) {
             try {
-                var treasure = door.requestWrite();
+                var treasure = door.requestRead();
                 var jewels = treasure.look(this);
+                door.releaseRead();
                 if (jewels >= 10) {
                     System.out.println("The king is holding a party");
-                    for (int i = 0; i < 10; i++) {
-                        treasure.retrieve(i, this);
+                    var wtreasure = door.requestWrite();
+                    for (int i = 0; i < 9; i++) {
+                        wtreasure.retrieve(0, this);
                     }
+                    Thread.sleep(1500);
                     door.releaseWrite();
-                    sleep(1000);
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);

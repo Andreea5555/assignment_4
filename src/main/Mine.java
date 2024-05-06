@@ -27,7 +27,7 @@ public class Mine
   private void createValuables()
   {
     Random random = new Random();
-    int count = random.nextInt(10);
+    int count = random.nextInt(100);
     for (int i = 0; i < count; i++)
     {
       valuables.add(new Diamond());
@@ -52,7 +52,8 @@ public class Mine
 
   public Valuable mine()
   {
-    if(valuables.size()==0){
+    if(valuables.isEmpty()){
+      System.out.println("MINE IS EMPTY");
       throw new RuntimeException("No more jewels");
     }
     Random random = new Random();

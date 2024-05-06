@@ -26,11 +26,9 @@ public class Miner implements Runnable
       logger.print("The miner starts mining");
       try
       {
-        sleep(1000);
-
+        Thread.sleep(500);
         Valuable valuable = mine.mine();
         logger.print("Producer_Consumer.Miner has mined "+valuable.getValuableType());
-
         deposit.depositValuable(valuable);
       }
       catch (InterruptedException e)

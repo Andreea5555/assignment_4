@@ -26,7 +26,7 @@ public class Accountant implements Reader, Runnable {
         while (true) {
             try {
                 logger.print("the accountant says that the count is " + getCount());
-                sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

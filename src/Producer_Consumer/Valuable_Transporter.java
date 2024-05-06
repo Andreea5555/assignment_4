@@ -45,8 +45,8 @@ public class Valuable_Transporter implements Runnable, Writer {
                     var val = valuables.remove(0);
                     door.requestWrite().add(val, this);
                     door.releaseWrite();
+                    Thread.sleep(500);
                 }
-                sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
